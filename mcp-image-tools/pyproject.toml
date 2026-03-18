@@ -1,0 +1,17 @@
+[project]
+name = "mcp-image-tools"
+version = "1.0.0"
+description = "MCP server for image processing: resize, convert, compress, watermark, metadata strip, EXIF read, batch process"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.0.0",
+    "Pillow>=10.0.0",
+    "pydantic>=2.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+mcp-image-tools = "src.server:main"

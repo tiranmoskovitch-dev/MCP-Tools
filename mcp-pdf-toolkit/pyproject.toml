@@ -1,0 +1,24 @@
+[project]
+name = "mcp-pdf-toolkit"
+version = "2.0.0"
+description = "Production MCP server for PDF operations: merge, split, extract text, fill forms, watermark, OCR, and image conversion"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.0.0",
+    "pypdf>=4.0.0",
+    "pdfplumber>=0.11.0",
+    "reportlab>=4.1.0",
+    "Pillow>=10.0.0",
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+ocr = ["pytesseract>=0.3.10"]
+images = ["pdf2image>=1.17.0"]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+mcp-pdf-toolkit = "src.server:main"

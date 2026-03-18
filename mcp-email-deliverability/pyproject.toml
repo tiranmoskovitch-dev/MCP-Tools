@@ -1,0 +1,18 @@
+[project]
+name = "mcp-email-deliverability"
+version = "1.0.0"
+description = "SPF/DKIM/DMARC validation, spam score, domain reputation checking"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.0.0",
+    "dnspython>=2.6.0",
+    "httpx>=0.27.0",
+    "pydantic>=2.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+mcp-email-deliverability = "src.server:main"

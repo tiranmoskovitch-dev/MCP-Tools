@@ -1,0 +1,54 @@
+# Docker Compose for MCP server deployment
+# Usage:
+#   1. Copy this file into your mcp-<name>/ directory
+#   2. Set TOOL_NAME in the .env file or export it
+#   3. Run: docker compose up -d
+#
+# Example .env file:
+#   TOOL_NAME=mcp-dns-intel
+
+services:
+  mcp-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        TOOL_NAME: ${TOOL_NAME:?Set TOOL_NAME in .env or environment}
+    container_name: ${TOOL_NAME:-mcp-server}
+    restart: unless-stopped
+
+    # MCP servers use stdio — keep stdin open
+    stdin_open: true
+
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "1.0"
+        reservations:
+          memory: 128M
+
+    # Mount config directory for runtime configuration
+    volumes:
+      - ./config:/app/config:ro
+
+    # Environment variables for the server
+    environment:
+      - MCP_LOG_LEVEL=${MCP_LOG_LEVEL:-INFO}
+      - MCP_CONFIG_PATH=/app/config
+
+    # Health check — verify the server module loads correctly
+    healthcheck:
+      test: ["CMD", "python", "/app/healthcheck.py"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Security options
+    security_opt:
+      - no-new-privileges:true
+    read_only: true
+    tmpfs:
+      - /tmp:size=64M

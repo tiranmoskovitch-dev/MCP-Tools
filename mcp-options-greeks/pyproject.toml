@@ -1,0 +1,17 @@
+[project]
+name = "mcp-options-greeks"
+version = "1.0.0"
+description = "Black-Scholes, IV surface, strategy builder, risk scenarios"
+requires-python = ">=3.11"
+dependencies = [
+    "mcp>=1.0.0",
+    "httpx>=0.27.0",
+    "pydantic>=2.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.build_meta"
+
+[project.scripts]
+mcp-options-greeks = "src.server:main"
